@@ -34,6 +34,7 @@ unless City.count > 0
 end
 
 100.times do
+    date = Date.today-rand(10)
     city = City.all.sample(1).first
     User.create(
         first_name: Faker::Name.name,
@@ -41,7 +42,9 @@ end
         mobile: Faker::PhoneNumber.cell_phone,
         password: "password",
         city_id: city.id,
-        state_id: city.state.id
+        state_id: city.state.id,
+        created_at: date,
+        updated_at: date
     )
 end
 

@@ -8,7 +8,8 @@ class Api::DashboardController < ApiController
             render json: {
                 user_count: user_count,
                 today_users: today_users,
-                data: ActiveModelSerializers::SerializableResource.new(data)
+                data: ActiveModelSerializers::SerializableResource.new(data),
+                chart: User.where(state_id: params[:state_id]).order('date(created_at)').group('date(created_at)').count
             }
         else
             user_count = User.count
@@ -17,7 +18,8 @@ class Api::DashboardController < ApiController
             render json: {
                 user_count: user_count,
                 today_users: today_users,
-                data: ActiveModelSerializers::SerializableResource.new(data)
+                data: ActiveModelSerializers::SerializableResource.new(data),
+                chart: User.order('date(created_at)').group('date(created_at)').count
             }
         end
         
