@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     get 'states', to: 'dashboard#state'
     get 'cities', to: 'dashboard#city'
     resources :users
+    resources :items
+    resources :shops
   end
 
 end

@@ -34,6 +34,9 @@ class User < ApplicationRecord
   end
 
   def generate_activation_code
-    self.activation_code = rand(9999999).to_s.center(6, rand(9).to_s)
+    loop do
+      self.activation_code = rand(9999999).to_s.center(6, rand(9).to_s)
+      break unless self.class.exists?(activation_code: activation_code)
+    end
   end
 end

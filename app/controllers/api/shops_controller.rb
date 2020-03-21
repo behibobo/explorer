@@ -1,4 +1,4 @@
-class ShopsController < ApplicationController
+class Api::ShopsController < ApiController
   before_action :set_shop, only: [:show, :update, :destroy]
 
   # GET /shops
