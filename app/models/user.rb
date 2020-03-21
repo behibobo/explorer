@@ -11,6 +11,24 @@ class User < ApplicationRecord
   belongs_to :city, optional: true
   belongs_to :state, optional: true
   
+  
+  def self.this_month(day, state_id = nil)
+    users = User.all
+    users = users.where(state_id: state_id) unless state_id.nil?
+    User.select {|u| u.created_at.to_date.to_pdate.month == Time.now.to_date.to_pdate.month }.count
+  end
+
+  def self.last_month(day, state_id = nil)
+    users = User.all
+    users = users.where(state_id: state_id) unless state_id.nil?
+    if Time.now.to_date.to_pdate.month == 1
+      users.select {|u| u.created_at.to_date.to_pdate.month == 12 and u.created_at.to_date.to_pdate.day == day}.count
+    else
+      users.select {|u| u.created_at.to_date.to_pdate.month == (Time.now.to_date.to_pdate.month) - 1 and u.created_at.to_date.to_pdate.day == day}.count
+    end
+  end
+
+
   def full_name
      "#{self.first_name} #{self.last_name}"
   end

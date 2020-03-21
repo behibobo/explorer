@@ -34,7 +34,7 @@ unless City.count > 0
 end
 
 100.times do
-    date = Date.today-rand(10)
+    date = Date.today-rand(30)
     city = City.all.sample(1).first
     User.create(
         first_name: Faker::Name.name,

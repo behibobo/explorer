@@ -5,21 +5,46 @@ class Api::DashboardController < ApiController
             user_count = User.where(state_id: params[:state_id]).count
             today_users = User.where(created_at: Date.today()).count
             data = City.order(:id).where(state_id: params[:state_id])
+
+            chart = []
+            (1..31).to_a.each do |index|
+                
+                val = {
+                    day: index,
+                    this: User.this_month(index, params[:state_id]),
+                    last: User.last_month(index, params[:state_id]),
+                }.to_h
+                chart << val
+            end
+
             render json: {
                 user_count: user_count,
                 today_users: today_users,
                 data: ActiveModelSerializers::SerializableResource.new(data),
-                chart: User.where(state_id: params[:state_id]).order('date(created_at)').group('date(created_at)').count
+                chart: chart
             }
         else
             user_count = User.count
             today_users = User.where(created_at: Date.today()).count
             data = State.all.order(:id)
+
+            chart = []
+            (1..31).to_a.each do |index|
+                
+                val = {
+                    day: index,
+                    this: User.this_month(index),
+                    last: User.last_month(index),
+                }.to_h
+                chart << val
+            end
+
+
             render json: {
                 user_count: user_count,
                 today_users: today_users,
                 data: ActiveModelSerializers::SerializableResource.new(data),
-                chart: User.order('date(created_at)').group('date(created_at)').count
+                chart: chart
             }
         end
         
