@@ -15,7 +15,7 @@ class User < ApplicationRecord
   def self.this_month(day, state_id = nil)
     users = User.all
     users = users.where(state_id: state_id) unless state_id.nil?
-    User.select {|u| u.created_at.to_date.to_pdate.month == Time.now.to_date.to_pdate.month }.count
+    User.select {|u| u.created_at.to_date.to_pdate.month == Time.now.to_date.to_pdate.month and u.created_at.to_date.to_pdate.day == day} }.count
   end
 
   def self.last_month(day, state_id = nil)
