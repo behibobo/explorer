@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.string :nid, null: true
       t.string :activation_code
       t.string :password_digest
+      t.references :state, foreign_key: true
       t.references :city, foreign_key: true
       t.timestamps
     end

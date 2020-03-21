@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200318225859) do
+ActiveRecord::Schema.define(version: 20200321143603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "admins", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "cities", force: :cascade do |t|
     t.bigint "state_id"
@@ -58,10 +65,12 @@ ActiveRecord::Schema.define(version: 20200318225859) do
     t.string "nid"
     t.string "activation_code"
     t.string "password_digest"
+    t.bigint "state_id"
     t.bigint "city_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_users_on_city_id"
+    t.index ["state_id"], name: "index_users_on_state_id"
   end
 
   add_foreign_key "cities", "states"
@@ -69,4 +78,5 @@ ActiveRecord::Schema.define(version: 20200318225859) do
   add_foreign_key "items", "users"
   add_foreign_key "shops", "cities"
   add_foreign_key "users", "cities"
+  add_foreign_key "users", "states"
 end

@@ -8,6 +8,10 @@
 require 'csv'    
 
 User.destroy_all
+Admin.destroy_all
+
+Admin.create(username: "admin", password: "password")
+
 provice = File.dirname(File.dirname(File.expand_path(__FILE__))) + '/db/province.csv'
 city = File.dirname(File.dirname(File.expand_path(__FILE__))) + '/db/city.csv'
 
@@ -30,12 +34,14 @@ unless City.count > 0
 end
 
 100.times do
+    city = City.all.sample(1).first
     User.create(
         first_name: Faker::Name.name,
         last_name: Faker::Name.name,
         mobile: Faker::PhoneNumber.cell_phone,
         password: "password",
-        city_id: City.all.sample(1).first.id
+        city_id: city.id,
+        state_id: city.state.id
     )
 end
 

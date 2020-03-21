@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    post 'auth/login', to: 'auth#login'
+    get 'dashboard', to: 'dashboard#index'
+    get 'states', to: 'dashboard#state'
+    get 'cities', to: 'dashboard#city'
     resources :users
   end
 
