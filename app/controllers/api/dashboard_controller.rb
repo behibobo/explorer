@@ -1,14 +1,26 @@
 class Api::DashboardController < ApiController
   
     def index
-        all_users = User.count
-        today_users = User.where(created_at: Date.today()).count
-        states = State.all.order(:id)
-        render json: {
-            all_users: all_users,
-            today_users: today_users,
-            states: ActiveModelSerializers::SerializableResource.new(states)
-        }
+        if params[:state_id]
+            user_count = User.where(state_id: params[:state_id]).count
+            today_users = User.where(created_at: Date.today()).count
+            data = City.order(:id).where(state_id: params[:state_id])
+            render json: {
+                user_count: user_count,
+                today_users: today_users,
+                data: ActiveModelSerializers::SerializableResource.new(data)
+            }
+        else
+            user_count = User.count
+            today_users = User.where(created_at: Date.today()).count
+            data = State.all.order(:id)
+            render json: {
+                user_count: user_count,
+                today_users: today_users,
+                data: ActiveModelSerializers::SerializableResource.new(data)
+            }
+        end
+        
     end
 
     def state_users
