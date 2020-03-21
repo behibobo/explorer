@@ -12,12 +12,10 @@ class Api::DashboardController < ApiController
     end
 
     def state_users
-        all_users = User.count
-        today_users = User.where(created_at: Date.today()).count
-
+        cities = City.order(:id).where(state_id: params[:id])
         render json: {
-            all_users: all_users,
-            today_users: today_users
+            cities: ActiveModelSerializers::SerializableResource.new(cities)
+
         }
     end
 

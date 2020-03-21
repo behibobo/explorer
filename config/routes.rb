@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :api do
     post 'auth/login', to: 'auth#login'
     get 'dashboard', to: 'dashboard#index'
+    get 'dashboard/state/:id', to: 'dashboard#state_users'
     get 'states', to: 'dashboard#state'
     get 'cities', to: 'dashboard#city'
     resources :users
