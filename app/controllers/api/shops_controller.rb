@@ -17,6 +17,12 @@ class Api::ShopsController < ApiController
         else
           shops = shops.includes(:city).order("cities.name ASC")
         end
+      elsif params[:order] == "state"
+        if params[:desc] == "true"
+          shops = shops.includes(:state).order("states.name DESC")
+        else
+          shops = shops.includes(:state).order("states.name ASC")
+        end
       else
         if params[:desc] == "true"
           shops = shops.order("#{params[:order]} DESC")
