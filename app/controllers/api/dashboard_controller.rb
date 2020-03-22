@@ -20,7 +20,7 @@ class Api::DashboardController < ApiController
             render json: {
                 user_count: user_count,
                 today_users: today_users,
-                shop_cpunt: Shop.where(state_id: params[:state_id]).count,
+                shop_count: Shop.where(state_id: params[:state_id]).count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 chart: chart
             }
@@ -44,7 +44,7 @@ class Api::DashboardController < ApiController
             render json: {
                 user_count: user_count,
                 today_users: today_users,
-                shop_cpunt: Shop.count,
+                shop_count: Shop.count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 chart: chart
             }
@@ -66,7 +66,7 @@ class Api::DashboardController < ApiController
     end
 
     def city
-        @cities = City.where(state_id: params[:state_id])
+        @cities = City.order(:name).where(state_id: params[:state_id])
         render json: @cities
     end
 end
