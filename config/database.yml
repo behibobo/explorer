@@ -19,14 +19,14 @@ development:
   host: 127.0.0.1
   pool: 5
   username: behzad
-  password: p@ssw0rd
+  password: Lhm-9_+#zWZq8y?3
   
   adapter: postgresql
   encoding: unicode
   database: explorer_test
   pool: 5
   username: behzad
-  password: p@ssw0rd
+  password: Lhm-9_+#zWZq8y?3
 
 production:
   adapter: postgresql
@@ -34,4 +34,4 @@ production:
   database: explorer_production
   pool: 5
   username: behzad
-  password: p@ssw0rd
+  password: Lhm-9_+#zWZq8y?3
