@@ -6,6 +6,23 @@ class Api::ShopsController < ApiController
     shops = Shop.all
     shops = shops.starts_with('name', params[:name]) if params[:name]
     shops = shops.where(city_id: params[:city_id]) if params[:city_id]
+    if params[:order] 
+      
+      if params[:order] == "city"
+        if params[:desc] == "true"
+          shops = shops.includes(:city).order("cities.name DESC")
+        else
+          shops = shops.includes(:city).order("cities.name ASC")
+        end
+      else
+        if params[:desc] == "true"
+          shops = shops.order("#{params[:order]} DESC")
+        else
+          shops = shops.order("#{params[:order]} ASC")
+        end
+      end
+    end
+
     paginate shops, per_page: (params[:per_page]) ? params[:per_page] : 15
   end
 

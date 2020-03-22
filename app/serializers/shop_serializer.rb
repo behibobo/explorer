@@ -1,5 +1,5 @@
 class ShopSerializer < ActiveModel::Serializer
-  attributes :id, :name, :address, :image, :phone, :city, :city_id, :items, :item_count, :state, :state_id
+  attributes :id, :name, :address, :image, :phone, :city, :city_id, :items, :item_count, :state, :state_id, :created_at
   
   def city
     object.city.name
@@ -23,5 +23,9 @@ class ShopSerializer < ActiveModel::Serializer
 
   def items
     ActiveModelSerializers::SerializableResource.new(object.items)
+  end
+
+  def created_at
+    object.created_at.to_date.to_pdate.to_s
   end
 end
