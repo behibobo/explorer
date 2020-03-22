@@ -4,7 +4,9 @@ class Api::ShopsController < ApiController
   # GET /shops
   def index
     shops = Shop.all
-    paginate shops, per_page: 15
+    shops = shops.starts_with('name', params[:name]) if params[:name]
+    shops = shops.where(city_id: params[:city_id]) if params[:city_id]
+    paginate shops, per_page: (params[:per_page]) ? params[:per_page] : 15
   end
 
   # GET /shops/1

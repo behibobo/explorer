@@ -36,12 +36,26 @@ end
 50.times do
     date = Date.today-rand(30)
     city = City.all.sample(1).first
-    Shop.create(
+    shop = Shop.create(
         name: Faker::Name.name,
         address: Faker::Name.name,
         phone: Faker::PhoneNumber.cell_phone,
         city_id: city.id,
     )
+
+    3.times do 
+        item = Item.create(
+            shop_id: shop.id,
+            name: Faker::Name.name,
+            brand: Faker::Name.name,
+        )
+
+        10.times do
+            ItemCode.create(
+                item_id: item.id
+            )
+        end
+    end
 end
 
 100.times do
