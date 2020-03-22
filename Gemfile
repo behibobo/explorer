@@ -16,8 +16,10 @@ gem 'simple_command'
 gem 'rack-cors'
 gem 'active_model_serializers', '~> 0.10.0'
 gem 'faker'
-gem 'will_paginate', '~> 3.1.0'
+gem 'kaminari'
 gem 'rails_pdate'
+gem 'pager_api'
+gem 'pagy'
 gem 'carrierwave', '~> 2.0'
 
 

@@ -33,6 +33,17 @@ unless City.count > 0
     end
 end
 
+50.times do
+    date = Date.today-rand(30)
+    city = City.all.sample(1).first
+    Shop.create(
+        name: Faker::Name.name,
+        address: Faker::Name.name,
+        phone: Faker::PhoneNumber.cell_phone,
+        city_id: city.id,
+    )
+end
+
 100.times do
     date = Date.today-rand(30)
     city = City.all.sample(1).first
