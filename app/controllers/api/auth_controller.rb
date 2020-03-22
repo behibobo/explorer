@@ -1,5 +1,5 @@
 class Api::AuthController < ApiController
-    skip_before_action :authenticate_request
+    skip_before_action :authenticate_request, only: [:login], raise: false
   
     def login
       authenticate params[:username], params[:password]
