@@ -20,7 +20,7 @@ development:
   pool: 5
   username: bobo
   password: p@ssw0rd
-  
+
   adapter: postgresql
   encoding: unicode
   database: explorer_test
