@@ -20,6 +20,7 @@ class Api::DashboardController < ApiController
             render json: {
                 user_count: user_count,
                 today_users: today_users,
+                shop_cpunt: Shop.where(state_id: params[:state_id]).count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 chart: chart
             }
@@ -43,6 +44,7 @@ class Api::DashboardController < ApiController
             render json: {
                 user_count: user_count,
                 today_users: today_users,
+                shop_cpunt: Shop.count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 chart: chart
             }
