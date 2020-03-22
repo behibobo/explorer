@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200322112558) do
+ActiveRecord::Schema.define(version: 20200322132007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,16 +30,26 @@ ActiveRecord::Schema.define(version: 20200322112558) do
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
+  create_table "item_codes", force: :cascade do |t|
+    t.bigint "item_id"
+    t.string "uuid"
+    t.bigint "user_id"
+    t.datetime "scan_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_item_codes_on_item_id"
+    t.index ["user_id"], name: "index_item_codes_on_user_id"
+  end
+
   create_table "items", force: :cascade do |t|
     t.bigint "shop_id"
     t.string "uuid"
     t.string "name"
     t.string "brand"
-    t.bigint "user_id"
+    t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_items_on_shop_id"
-    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -47,6 +57,7 @@ ActiveRecord::Schema.define(version: 20200322112558) do
     t.string "name"
     t.string "address"
     t.string "phone"
+    t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_shops_on_city_id"
@@ -80,8 +91,9 @@ ActiveRecord::Schema.define(version: 20200322112558) do
   end
 
   add_foreign_key "cities", "states"
+  add_foreign_key "item_codes", "items"
+  add_foreign_key "item_codes", "users"
   add_foreign_key "items", "shops"
-  add_foreign_key "items", "users"
   add_foreign_key "shops", "cities"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "states"

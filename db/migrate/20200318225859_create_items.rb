@@ -6,8 +6,6 @@ class CreateItems < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :brand
       t.string :image, null: true
-      t.references :user, foreign_key: true
-
       t.timestamps
     end
   end

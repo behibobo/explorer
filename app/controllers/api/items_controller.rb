@@ -15,6 +15,7 @@ class Api::ItemsController < ApiController
 
   # POST /items
   def create
+    byebug
     @item = Item.new(item_params)
 
     if @item.save
@@ -46,6 +47,6 @@ class Api::ItemsController < ApiController
 
     # Only allow a trusted parameter "white list" through.
     def item_params
-      params.require(:item).permit(:shop_id, :uuid, :name, :brand, :user_id)
+      params.require(:item).permit(:shop_id, :name, :brand)
     end
 end
