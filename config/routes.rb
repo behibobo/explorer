@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'dashboard/state/:id', to: 'dashboard#state_users'
     get 'states', to: 'dashboard#state'
     get 'cities', to: 'dashboard#city'
+    post 'upload', to: "uploader#upload"
     resources :users
     resources :items
     resources :shops
