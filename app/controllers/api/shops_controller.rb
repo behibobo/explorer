@@ -3,8 +3,7 @@ class Api::ShopsController < ApiController
 
   # GET /shops
   def index
-    @shops = Shop.all
-
+    @shops = Shop.paginate(page: params[:page])
     render json: @shops
   end
 
