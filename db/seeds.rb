@@ -41,6 +41,7 @@ end
         address: Faker::Name.name,
         phone: Faker::PhoneNumber.cell_phone,
         city_id: city.id,
+        state_id: city.state.id,
     )
 
     3.times do 

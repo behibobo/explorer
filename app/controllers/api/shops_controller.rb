@@ -4,10 +4,13 @@ class Api::ShopsController < ApiController
   # GET /shops
   def index
     shops = Shop.all
-    shops = shops.starts_with('name', params[:name]) if params[:name]
+
+    shops = shops.where(state_id: params[:state_id]) if params[:state_id]
     shops = shops.where(city_id: params[:city_id]) if params[:city_id]
+    
+    shops = shops.starts_with('name', params[:name]) if params[:name]
+    
     if params[:order] 
-      
       if params[:order] == "city"
         if params[:desc] == "true"
           shops = shops.includes(:city).order("cities.name DESC")

@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20200322132007) do
 
   create_table "shops", force: :cascade do |t|
     t.bigint "city_id"
+    t.bigint "state_id"
     t.string "name"
     t.string "address"
     t.string "phone"
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 20200322132007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_shops_on_city_id"
+    t.index ["state_id"], name: "index_shops_on_state_id"
   end
 
   create_table "states", force: :cascade do |t|
@@ -95,6 +97,7 @@ ActiveRecord::Schema.define(version: 20200322132007) do
   add_foreign_key "item_codes", "users"
   add_foreign_key "items", "shops"
   add_foreign_key "shops", "cities"
+  add_foreign_key "shops", "states"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "states"
 end
