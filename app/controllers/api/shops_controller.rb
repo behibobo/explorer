@@ -47,6 +47,6 @@ class Api::ShopsController < ApiController
 
     # Only allow a trusted parameter "white list" through.
     def shop_params
-      params.require(:shop).permit(:city_id, :name, :address, :phone)
+      params.require(:shop).permit(:city_id, :name, :address, :phone, :image)
     end
 end
