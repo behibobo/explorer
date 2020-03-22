@@ -2,7 +2,7 @@ class Item < ApplicationRecord
   before_create :create_unique_identifier
 
   belongs_to :shop
-  belongs_to :user. optional: true
+  belongs_to :user, optional: true
 
   def create_unique_identifier
     loop do

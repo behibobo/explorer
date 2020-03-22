@@ -1,5 +1,5 @@
 class App::AuthController < ApplicationController
-  skip_before_action :authenticate_request
+  skip_before_action :authenticate_request, only: [:login, :signup, :activate, :set_password], raise: false
 
     def login
       authenticate params[:username], params[:password]
