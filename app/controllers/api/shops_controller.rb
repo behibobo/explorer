@@ -3,9 +3,7 @@ class Api::ShopsController < ApiController
 
   # GET /shops
   def index
-    shops = Shop.page(params[:page]).per(15)
-    count = shops.count
-    per_page = (params[:per_page])? params[:per_page] : 15
+    shops = Shop.all
     paginate shops, per_page: 15
   end
 
