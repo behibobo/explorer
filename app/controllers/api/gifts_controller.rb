@@ -23,8 +23,8 @@ class Api::GiftsController < ApiController
 
   # PATCH/PUT /gifts/1
   def update
-    gift.update(gift_params)
-      render json: gift
+    @gift.update(gift_params)
+    render json: @gift
   end
 
   # DELETE /gifts/1
