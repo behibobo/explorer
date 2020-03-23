@@ -24,6 +24,8 @@ class Api::DashboardController < ApiController
                 today_users: today_users,
                 shop_count: Shop.where(state_id: params[:state_id]).count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
+                gifts: gifts,
+                found_gifts: found_gifts,
                 chart: chart
             }
         else
@@ -48,6 +50,8 @@ class Api::DashboardController < ApiController
                 today_users: today_users,
                 shop_count: Shop.count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
+                gifts: gifts,
+                found_gifts: found_gifts,
                 chart: chart
             }
         end
