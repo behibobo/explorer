@@ -3,8 +3,19 @@ class Api::ItemsController < ApiController
 
   # GET /items
   def index
-    @items = Item.where(shop_id: params[:shop_id])
-    render json: @items
+    items = Item.where(shop_id: params[:shop_id])
+
+    items = items.starts_with('name', params[:name]) if params[:name]
+    items = items.starts_with('brand', params[:brand]) if params[:brand]
+    
+    if params[:order] 
+      if params[:desc] == "true"
+        shops = shops.order("#{params[:order]} DESC")
+      else
+        shops = shops.order("#{params[:order]} ASC")
+      end
+    end
+    paginate items, per_page: (params[:per_page]) ? params[:per_page] : 15
   end
 
   # GET /items/1
@@ -14,11 +25,12 @@ class Api::ItemsController < ApiController
 
   # POST /items
   def create
-    params[:count].to_i.times do 
-      @item = Item.new(item_params)
-      @item.save        
+    @item = Item.new(item_params)
+    @item.save 
+    params[:count].to_i.times do  
+      ItemCode.create(item_id: @item.id)      
     end
-    render json: {}
+    render json: ActiveModelSerializers::SerializableResource.new(@item)
   end
 
   # PATCH/PUT /items/1
