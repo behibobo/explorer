@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :gifts
-  resources :items
-  resources :shops
+
   namespace :app do
     post 'auth/login', to: 'auth#login'
     post 'auth/signup', to: 'auth#signup'
@@ -20,6 +18,7 @@ Rails.application.routes.draw do
     post 'remove_gift', to: 'items#remove_gift'
     resources :users
     resources :items
+    resources :gifts
     resources :shops do
       resources :items
     end

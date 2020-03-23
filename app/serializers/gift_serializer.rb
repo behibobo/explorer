@@ -1,3 +1,3 @@
 class GiftSerializer < ActiveModel::Serializer
-  attributes :id, :name, :value, :items
+  attributes :id, :name, :value
 end
