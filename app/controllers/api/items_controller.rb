@@ -3,8 +3,7 @@ class Api::ItemsController < ApiController
 
   # GET /items
   def index
-    @items = Item.all
-
+    @items = Item.where(shop_id: params[:shop_id])
     render json: @items
   end
 
@@ -15,14 +14,11 @@ class Api::ItemsController < ApiController
 
   # POST /items
   def create
-    byebug
-    @item = Item.new(item_params)
-
-    if @item.save
-      render json: @item, status: :created, location: @item
-    else
-      render json: @item.errors, status: :unprocessable_entity
+    params[:count].to_i.times do 
+      @item = Item.new(item_params)
+      @item.save        
     end
+    render json: {}
   end
 
   # PATCH/PUT /items/1

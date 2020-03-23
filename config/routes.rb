@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     post 'upload', to: "uploader#upload"
     resources :users
     resources :items
-    resources :shops
+    resources :shops do
+      resources :items
+    end
   end
 
 end
