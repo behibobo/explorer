@@ -10,9 +10,9 @@ class Api::ItemsController < ApiController
     
     if params[:order] 
       if params[:desc] == "true"
-        shops = shops.order("#{params[:order]} DESC")
+        items = items.order("#{params[:order]} DESC")
       else
-        shops = shops.order("#{params[:order]} ASC")
+        items = items.order("#{params[:order]} ASC")
       end
     end
     paginate items, per_page: (params[:per_page]) ? params[:per_page] : 15
