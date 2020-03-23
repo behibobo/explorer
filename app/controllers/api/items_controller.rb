@@ -55,6 +55,6 @@ class Api::ItemsController < ApiController
 
     # Only allow a trusted parameter "white list" through.
     def item_params
-      params.require(:item).permit(:shop_id, :name, :brand)
+      params.require(:item).permit(:shop_id, :name, :brand, :item)
     end
 end
