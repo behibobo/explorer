@@ -30,7 +30,7 @@ class Api::ItemsController < ApiController
     params[:count].to_i.times do  
       ItemCode.create(item_id: @item.id)      
     end
-    render json: ActiveModelSerializers::SerializableResource.new(@item)
+    render json: @item
   end
 
   # PATCH/PUT /items/1
@@ -45,6 +45,20 @@ class Api::ItemsController < ApiController
   # DELETE /items/1
   def destroy
     @item.destroy
+  end
+
+  def assign_gift
+    code = ItemCode.find_by(uuid: params[:uuid])
+    code.gift_id = params[:gift_id]
+    code.save
+    render json: code
+  end
+
+  def remove_gift
+    code = ItemCode.find_by(uuid: params[:uuid])
+    code.gift = nil
+    code.save
+    render json: code
   end
 
   private

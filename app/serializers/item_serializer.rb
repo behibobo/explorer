@@ -6,7 +6,7 @@ class ItemSerializer < ActiveModel::Serializer
   end
 
   def codes
-    object.item_codes.map(&:uuid)
+    ActiveModelSerializers::SerializableResource.new(object.item_codes)
   end
 
   def created_at

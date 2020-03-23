@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :gifts
   resources :items
   resources :shops
   namespace :app do
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
     get 'states', to: 'dashboard#state'
     get 'cities', to: 'dashboard#city'
     post 'upload', to: "uploader#upload"
+    post 'assign_gift', to: 'items#assign_gift'
+    post 'remove_gift', to: 'items#remove_gift'
     resources :users
     resources :items
     resources :shops do

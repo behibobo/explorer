@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200322132007) do
+ActiveRecord::Schema.define(version: 20200323135631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,13 @@ ActiveRecord::Schema.define(version: 20200322132007) do
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
+  create_table "gifts", force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "item_codes", force: :cascade do |t|
     t.bigint "item_id"
     t.string "uuid"
@@ -37,6 +44,8 @@ ActiveRecord::Schema.define(version: 20200322132007) do
     t.datetime "scan_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "gift_id"
+    t.index ["gift_id"], name: "index_item_codes_on_gift_id"
     t.index ["item_id"], name: "index_item_codes_on_item_id"
     t.index ["user_id"], name: "index_item_codes_on_user_id"
   end
@@ -93,6 +102,7 @@ ActiveRecord::Schema.define(version: 20200322132007) do
   end
 
   add_foreign_key "cities", "states"
+  add_foreign_key "item_codes", "gifts"
   add_foreign_key "item_codes", "items"
   add_foreign_key "item_codes", "users"
   add_foreign_key "items", "shops"
