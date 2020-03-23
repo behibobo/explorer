@@ -1,6 +1,8 @@
 class Api::DashboardController < ApiController
   
     def index
+        gifts = ItemCode.where.not(gift: nil).count
+        found_gifts = ItemCode.where.not(gift: nil).where.not(user: nil).count
         if params[:state_id]
             user_count = User.where(state_id: params[:state_id]).count
             today_users = User.where(created_at: Date.today()).count

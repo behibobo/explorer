@@ -16,22 +16,15 @@ class Api::GiftsController < ApiController
 
   # POST /gifts
   def create
-    @gift = Gift.new(gift_params)
-
-    if @gift.save
-      render json: @gift, status: :created, location: @gift
-    else
-      render json: @gift.errors, status: :unprocessable_entity
-    end
+    gift = Gift.new(gift_params)
+    gift.save
+    render json: gift
   end
 
   # PATCH/PUT /gifts/1
   def update
-    if @gift.update(gift_params)
-      render json: @gift
-    else
-      render json: @gift.errors, status: :unprocessable_entity
-    end
+    gift.update(gift_params)
+      render json: gift
   end
 
   # DELETE /gifts/1
