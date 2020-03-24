@@ -22,5 +22,7 @@ class JsonWebToken
       rescue JWT::DecodeError, JWT::VerificationError => e
         raise ExceptionHandler::DecodeError, e.message
       end
+
+
     end
   end

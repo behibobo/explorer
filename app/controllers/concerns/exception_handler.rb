@@ -13,9 +13,9 @@ module ExceptionHandler
     # Define custom handlers
     rescue_from ActiveRecord::RecordInvalid, with: :four_twenty_two
     rescue_from ExceptionHandler::AuthenticationError, with: :unauthorized_request
-    rescue_from ExceptionHandler::MissingToken, with: :four_twenty_two
-    rescue_from ExceptionHandler::InvalidToken, with: :four_twenty_two
-    rescue_from ExceptionHandler::ExpiredSignature, with: :four_ninety_eight
+    rescue_from ExceptionHandler::MissingToken, with: :four_zero_one
+    rescue_from ExceptionHandler::InvalidToken, with: :four_zero_one
+    rescue_from ExceptionHandler::ExpiredSignature, with: :four_zero_one
     rescue_from ExceptionHandler::DecodeError, with: :four_zero_one
 
     rescue_from ActiveRecord::RecordNotFound do |e|
