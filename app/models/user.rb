@@ -10,7 +10,8 @@ class User < ApplicationRecord
 
   belongs_to :city, optional: true
   belongs_to :state, optional: true
-  
+  has_many :item_codes
+  has_many :items, through: :item_codes
   
   def self.this_month(day, state_id = nil)
     users = User.all
@@ -32,6 +33,7 @@ class User < ApplicationRecord
   def full_name
      "#{self.first_name} #{self.last_name}"
   end
+
 
   def generate_activation_code
     loop do
