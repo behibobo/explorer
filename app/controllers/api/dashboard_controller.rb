@@ -3,6 +3,10 @@ class Api::DashboardController < ApiController
     def index
         gifts = ItemCode.where.not(gift: nil).count
         found_gifts = ItemCode.where.not(gift: nil).where.not(user: nil).count
+
+        found_today = ItemCode.where.not(gift: nil).where(scan_date: Date.today)
+        found_yesterday = ItemCode.where.not(gift: nil).where(scan_date: Date.yesterday)
+
         if params[:state_id]
             user_count = User.where(state_id: params[:state_id]).count
             today_users = User.where(created_at: Date.today()).count
@@ -26,7 +30,10 @@ class Api::DashboardController < ApiController
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 gifts: gifts,
                 found_gifts: found_gifts,
-                chart: chart
+                chart: chart,
+                found_today: ActiveModelSerializers::SerializableResource.new(found_today),
+                found_yesterday: ActiveModelSerializers::SerializableResource.new(found_yesterday)
+
             }
         else
             user_count = User.count
@@ -52,7 +59,9 @@ class Api::DashboardController < ApiController
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 gifts: gifts,
                 found_gifts: found_gifts,
-                chart: chart
+                chart: chart,
+                found_today: ActiveModelSerializers::SerializableResource.new(found_today),
+                found_yesterday: ActiveModelSerializers::SerializableResource.new(found_yesterday)
             }
         end
         

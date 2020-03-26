@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     post 'upload', to: "uploader#upload"
     post 'assign_gift', to: 'items#assign_gift'
     post 'remove_gift', to: 'items#remove_gift'
+    get 'shop_items', to: 'items#shop_items'
+    get 'none_shop_items', to: 'items#none_shop_items'
     resources :users
     resources :items
     resources :gifts

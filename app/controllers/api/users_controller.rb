@@ -6,27 +6,27 @@ class Api::UsersController < ApiController
       users = users.where(state_id: params[:state_id]) if params[:state_id]
       users = users.where(city_id: params[:city_id]) if params[:city_id]
 
-      shops = shops.starts_with('first_name', params[:first_name]) if params[:first_name]
-      shops = shops.starts_with('last_name', params[:last_name]) if params[:last_name]
+      users = users.starts_with('first_name', params[:first_name]) if params[:first_name]
+      users = users.starts_with('last_name', params[:last_name]) if params[:last_name]
 
       if params[:order] 
         if params[:order] == "city"
           if params[:desc] == "true"
-            UsersController = UsersController.includes(:city).order("cities.name DESC")
+            users = users.includes(:city).order("cities.name DESC")
           else
-            UsersController = UsersController.includes(:city).order("cities.name ASC")
+            users = users.includes(:city).order("cities.name ASC")
           end
         elsif params[:order] == "state"
           if params[:desc] == "true"
-            UsersController = UsersController.includes(:state).order("states.name DESC")
+            users = users.includes(:state).order("states.name DESC")
           else
-            UsersController = UsersController.includes(:state).order("states.name ASC")
+            users = users.includes(:state).order("states.name ASC")
           end
         else
           if params[:desc] == "true"
-            UsersController = UsersController.order("#{params[:order]} DESC")
+            users = users.order("#{params[:order]} DESC")
           else
-            UsersController = UsersController.order("#{params[:order]} ASC")
+            users = users.order("#{params[:order]} ASC")
           end
         end
       end

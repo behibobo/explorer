@@ -18,6 +18,40 @@ class Api::ItemsController < ApiController
     paginate items, per_page: (params[:per_page]) ? params[:per_page] : 15
   end
 
+  def shop_items
+    items = Item.where.not(shop_id: nil)
+
+    items = items.starts_with('name', params[:name]) if params[:name]
+    items = items.starts_with('brand', params[:brand]) if params[:brand]
+
+    items = items.where(shop_id: params[:shop_id]) if params[:shop_id]
+    
+    if params[:order] 
+      if params[:desc] == "true"
+        items = items.order("#{params[:order]} DESC")
+      else
+        items = items.order("#{params[:order]} ASC")
+      end
+    end
+    paginate items, per_page: (params[:per_page]) ? params[:per_page] : 15
+  end
+
+  def none_shop_items
+    items = Item.where(shop_id: nil)
+
+    items = items.starts_with('name', params[:name]) if params[:name]
+    items = items.starts_with('brand', params[:brand]) if params[:brand]
+    
+    if params[:order] 
+      if params[:desc] == "true"
+        items = items.order("#{params[:order]} DESC")
+      else
+        items = items.order("#{params[:order]} ASC")
+      end
+    end
+    paginate items, per_page: (params[:per_page]) ? params[:per_page] : 15
+  end
+
   # GET /items/1
   def show
     render json: @item

@@ -1,8 +1,8 @@
 class ItemCodeSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :has_gift, :gift, :scan_date, :item
+  attributes :id, :uuid, :has_gift, :gift, :scan_date, :user
   
-  def item
-    object.item
+  def user
+    object.user unless object.user.nil?
   end
 
   def has_gift
@@ -10,6 +10,6 @@ class ItemCodeSerializer < ActiveModel::Serializer
   end
 
   def scan_date
-    object.scan_date.to_date.to_pdate.to_s
+    object.scan_date.to_date.to_pdate.to_s unless object.scan_date.nil?
   end
 end
