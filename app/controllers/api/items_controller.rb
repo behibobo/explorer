@@ -27,10 +27,24 @@ class Api::ItemsController < ApiController
     items = items.where(shop_id: params[:shop_id]) if params[:shop_id]
     
     if params[:order] 
-      if params[:desc] == "true"
-        items = items.order("#{params[:order]} DESC")
+      if params[:order] == "city"
+        if params[:desc] == "true"
+          items = items.includes(:city).order("cities.name DESC")
+        else
+          items = items.includes(:city).order("cities.name ASC")
+        end
+      elsif params[:order] == "state"
+        if params[:desc] == "true"
+          items = items.includes(:state).order("states.name DESC")
+        else
+          items = items.includes(:state).order("states.name ASC")
+        end
       else
-        items = items.order("#{params[:order]} ASC")
+        if params[:desc] == "true"
+          items = items.order("#{params[:order]} DESC")
+        else
+          items = items.order("#{params[:order]} ASC")
+        end
       end
     end
     paginate items, per_page: (params[:per_page]) ? params[:per_page] : 15

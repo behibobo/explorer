@@ -9,6 +9,7 @@ class Api::GiftsController < ApiController
     render json: gifts
   end
 
+
   # GET /gifts/1
   def show
     render json: @gift

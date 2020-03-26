@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     resources :shops do
       resources :items
     end
+    get 'find_shops', to: 'shops#find_shops'
+
   end
 
 end

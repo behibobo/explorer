@@ -35,6 +35,13 @@ class Api::ShopsController < ApiController
     paginate shops, per_page: (params[:per_page]) ? params[:per_page] : 15
   end
 
+
+  def find_shops
+    shops = Shop.all
+    shops = shops.starts_with('name', params[:name]) if params[:name]
+    render json: shops
+  end
+
   # GET /shops/1
   def show
     render json: @shop
