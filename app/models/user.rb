@@ -34,6 +34,11 @@ class User < ApplicationRecord
      "#{self.first_name} #{self.last_name}"
   end
 
+  def self.starts_with(column_name, prefix)
+    where("lower(#{column_name}) like ?", "#{prefix.downcase}%")
+    .order(:last_name)
+    .order(:first_name)
+  end
 
   def generate_activation_code
     loop do

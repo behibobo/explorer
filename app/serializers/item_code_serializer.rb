@@ -1,8 +1,16 @@
 class ItemCodeSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :has_gift, :gift, :scan_date, :user
+  attributes :id, :uuid, :has_gift, :gift, :scan_date, :user, :item, :shop
   
+  def item
+    object.item
+  end
+
   def user
-    object.user unless object.user.nil?
+    object.user
+  end
+
+  def shop
+    object.item.shop unless object.item.shop.nil?
   end
 
   def has_gift

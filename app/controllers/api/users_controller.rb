@@ -37,5 +37,10 @@ class Api::UsersController < ApiController
       user = User.find(params[:id])
       render json: user
     end
+
+    def destroy
+      user = User.find(params[:id])
+      user.destroy
+    end 
 end
   
