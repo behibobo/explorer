@@ -90,6 +90,8 @@ ActiveRecord::Schema.define(version: 20200323135631) do
     t.string "first_name"
     t.string "last_name"
     t.string "mobile"
+    t.bigint "credit", default: 0
+    t.date "dob"
     t.string "nid"
     t.string "activation_code"
     t.string "password_digest"

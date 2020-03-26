@@ -60,12 +60,13 @@ end
 end
 
 100.times do
-    date = Date.today-rand(30)
+    date = Faker::Date.between(from: 40.days.ago, to: Date.today)
     city = City.all.sample(1).first
     User.create(
         first_name: Faker::Name.name,
         last_name: Faker::Name.name,
         mobile: Faker::PhoneNumber.cell_phone,
+        dob: Faker::Date.between(from: 40.days.ago, to: 15.days.ago),
         password: "password",
         city_id: city.id,
         state_id: city.state.id,
