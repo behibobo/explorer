@@ -18,6 +18,6 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def history
-    ActiveModelSerializers::SerializableResource.new(object.item_codes)
+    ActiveModelSerializers::SerializableResource.new(object.item_codes.order('scan_date DESC'))
   end
 end
