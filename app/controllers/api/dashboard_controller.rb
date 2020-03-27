@@ -15,7 +15,7 @@ class Api::DashboardController < ApiController
             male = state_users.where(gender: 0).count
             female = state_users.where(gender: 1).count
 
-            ages = state_users.all.map {|u| u.age }.uniq.map {|a| {age: a, count: 0} }
+            ages = state_users.all.map {|u| u.age }.uniq.sort().map {|a| {age: a, count: 0} }
             ages.each do |age|
                 age[:count] = state_users.select {|u| u.age == age[:age]}.count
             end
@@ -54,7 +54,7 @@ class Api::DashboardController < ApiController
             male = users.where(gender: 0).count
             female = users.where(gender: 1).count
 
-            ages = users.all.map {|u| u.age }.uniq.map {|a| {age: a, count: 0} }
+            ages = users.all.map {|u| u.age }.uniq.sort().map {|a| {age: a, count: 0} }
             ages.each do |age|
                 age[:count] = users.select {|u| u.age == age[:age]}.count
             end
