@@ -12,7 +12,11 @@ class User < ApplicationRecord
   belongs_to :state, optional: true
   has_many :item_codes
   has_many :items, through: :item_codes
-  
+
+  def age
+    Date.today.year - self.dob.to_date.year
+  end
+
   def self.this_month(day, state_id = nil)
     users = User.all
     users = users.where(state_id: state_id) unless state_id.nil?

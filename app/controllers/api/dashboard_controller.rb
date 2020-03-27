@@ -15,8 +15,10 @@ class Api::DashboardController < ApiController
             male = state_users.where(gender: 0).count
             female = state_users.where(gender: 1).count
 
-            dates = state_users.select(:dob).group(:dob).count
-            ages = dates.map {|u| {age: Date.today.year - u.first.year , count: u.last} }
+            ages = state_users.all.map {|u| u.age }.uniq.map {|a| {age: a, count: 0} }
+            ages.each do |age|
+                age[:count] = state_users.select {|u| u.age == age[:age]}.count
+            end
 
             chart = []
             (1..31).to_a.each do |index|
@@ -52,8 +54,10 @@ class Api::DashboardController < ApiController
             male = users.where(gender: 0).count
             female = users.where(gender: 1).count
 
-            dates = users.select(:dob).group(:dob).count
-            ages = dates.map {|u| {age: Date.today.year - u.first.year , count: u.last} }
+            ages = users.all.map {|u| u.age }.uniq.map {|a| {age: a, count: 0} }
+            ages.each do |age|
+                age[:count] = users.select {|u| u.age == age[:age]}.count
+            end
 
             chart = []
             (1..31).to_a.each do |index|
