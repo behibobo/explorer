@@ -7,7 +7,7 @@ class App::ItemsController < AppController
                 scan_date: code.scan_date.to_date.to_pdate.to_s,
                 item_name: code.item.name,
                 item_brand: code.item.brand,
-                item_image: code.item.image,
+                item_image: code.item.image_url,
                 has_gift: !code.gift.nil?,
                 gift_value: (!code.gift.nil?)? code.gift.value : "",
             }
