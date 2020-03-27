@@ -107,4 +107,3 @@ class Api::DashboardController < ApiController
         render json: @cities
     end
 end
-  

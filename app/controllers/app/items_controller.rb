@@ -36,5 +36,28 @@ class App::ItemsController < AppController
 
         render json: items.to_json
     end
+
+    def scan_item
+        code = ItemCode.find_by(uuid: params[:code])
+        code.user = current_user
+        code.scan_date = Date.today
+        code.save!
+
+        unless code.gift.nil?
+            current_user.credit += code.gift.value
+            current_user.save
+        end
+
+        item = {
+            scan_date: code.scan_date.to_date.to_pdate.to_s,
+            item_name: code.item.name,
+            item_brand: code.item.brand,
+            item_image: code.item.image_url,
+            has_gift: !code.gift.nil?,
+            gift_value: (!code.gift.nil?)? code.gift.value : "",
+        }
+
+        render json: item.to_json
+    end
 end
   

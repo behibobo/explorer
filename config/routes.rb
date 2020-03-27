@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'user/profile', to: 'user#index'
     get 'items', to: 'items#index'
     get 'last_items', to: 'items#last_items'
+    post 'scan_item', to: 'items#scan_item'
   end
 
   namespace :api do
