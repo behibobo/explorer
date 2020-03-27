@@ -38,14 +38,25 @@ class App::ItemsController < AppController
     end
 
     def scan_item
+        message = ""
+        success = true
         code = ItemCode.find_by(uuid: params[:code])
-        code.user = current_user
-        code.scan_date = Date.today
-        code.save!
 
-        unless code.gift.nil?
-            current_user.credit += code.gift.value
-            current_user.save
+        if code.user.nil?
+            code.user = current_user
+            code.scan_date = Date.today
+            code.save!
+
+            unless code.gift.nil?
+                current_user.credit += code.gift.value
+                current_user.save
+            end
+            message = "بارکد با موفقیت ثبت شد"
+            success = true
+        else
+            success = false
+            message = "این بارکد قبلا توسط خود شما در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user == current_user
+            message = "این بارکد قبلا توسط کاربر دیگری در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user != current_user
         end
 
         item = {
@@ -57,7 +68,7 @@ class App::ItemsController < AppController
             gift_value: (!code.gift.nil?)? code.gift.value : "",
         }
 
-        render json: item.to_json
+        render json: {item: item, message: message, success: success }
     end
 end
   
