@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     post 'auth/activate', to: 'auth#activate'
     post 'auth/setpassword', to: 'auth#set_password'
     get 'user/profile', to: 'user#index'
+    get 'items', to: 'items#index'
   end
 
   namespace :api do
