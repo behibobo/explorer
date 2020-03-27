@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     post 'auth/setpassword', to: 'auth#set_password'
     get 'user/profile', to: 'user#index'
     get 'items', to: 'items#index'
+    get 'last_items', to: 'items#last_items'
   end
 
   namespace :api do
