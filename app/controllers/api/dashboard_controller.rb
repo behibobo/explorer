@@ -8,9 +8,15 @@ class Api::DashboardController < ApiController
         found_yesterday = ItemCode.where.not(gift: nil).where(scan_date: Date.yesterday)
 
         if params[:state_id]
-            user_count = User.where(state_id: params[:state_id]).count
+            state_users = User.where(state_id: params[:state_id])
             today_users = User.where(created_at: Date.today()).count
             data = City.order(:id).where(state_id: params[:state_id])
+
+            male = state_users.where(gender: 0).count
+            female = state_users.where(gender: 1).count
+
+            dates = state_users.select(:dob).group(:dob).count
+            ages = dates.map {|u| {age: Date.today.year - u.first.year , count: u.last} }
 
             chart = []
             (1..31).to_a.each do |index|
@@ -24,21 +30,30 @@ class Api::DashboardController < ApiController
             end
 
             render json: {
-                user_count: user_count,
+                user_count: state_users.count,
                 today_users: today_users,
                 shop_count: Shop.where(state_id: params[:state_id]).count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 gifts: gifts,
                 found_gifts: found_gifts,
                 chart: chart,
+                male: male,
+                female: female,
+                ages: ages,
                 found_today: ActiveModelSerializers::SerializableResource.new(found_today),
                 found_yesterday: ActiveModelSerializers::SerializableResource.new(found_yesterday)
 
             }
         else
-            user_count = User.count
+            users = User.all
             today_users = User.where(created_at: Date.today()).count
             data = State.all.order(:id)
+
+            male = users.where(gender: 0).count
+            female = users.where(gender: 1).count
+
+            dates = users.select(:dob).group(:dob).count
+            ages = dates.map {|u| {age: Date.today.year - u.first.year , count: u.last} }
 
             chart = []
             (1..31).to_a.each do |index|
@@ -53,13 +68,16 @@ class Api::DashboardController < ApiController
 
 
             render json: {
-                user_count: user_count,
+                user_count: users.count,
                 today_users: today_users,
                 shop_count: Shop.count,
                 data: ActiveModelSerializers::SerializableResource.new(data),
                 gifts: gifts,
                 found_gifts: found_gifts,
                 chart: chart,
+                male: male,
+                female: female,
+                ages: ages,
                 found_today: ActiveModelSerializers::SerializableResource.new(found_today),
                 found_yesterday: ActiveModelSerializers::SerializableResource.new(found_yesterday)
             }
