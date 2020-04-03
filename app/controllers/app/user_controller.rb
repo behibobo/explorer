@@ -5,7 +5,9 @@ class App::UserController < AppController
         user = {
             first_name: current_user.first_name,
             last_name: current_user.last_name,
-            credit: current_user.credit
+            credit: current_user.credit,
+            gender: current_user.gender,
+            email: current_user.email
         }
 
 

@@ -80,6 +80,7 @@ end
         first_name: Faker::Name.name,
         last_name: Faker::Name.name,
         mobile: Faker::PhoneNumber.cell_phone,
+        email: Faker::Internet.email,
         dob: Faker::Date.between(from: 40.years.ago, to: 15.years.ago),
         gender: [0,1].sample,
         password: "password",
