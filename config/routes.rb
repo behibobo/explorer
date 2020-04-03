@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     post 'auth/signup', to: 'auth#signup'
     post 'auth/activate', to: 'auth#activate'
     post 'auth/setpassword', to: 'auth#set_password'
-    get 'user/profile', to: 'user#index'
+    get 'user', to: 'user#index'
     get 'items', to: 'items#index'
     get 'last_items', to: 'items#last_items'
     post 'scan_item', to: 'items#scan_item'

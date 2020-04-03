@@ -1,5 +1,7 @@
 class App::ItemsController < AppController
     def index
+
+
         codes = ItemCode.where(user: current_user)
         items = []
         codes.each do |code|
