@@ -5,9 +5,6 @@ class User < ApplicationRecord
 
   before_create :generate_activation_code
 
-  #encrypt password
-  has_secure_password
-
   belongs_to :city, optional: true
   belongs_to :state, optional: true
   has_many :item_codes

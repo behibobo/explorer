@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20200403175841) do
     t.string "uuid"
     t.string "name"
     t.string "brand"
+    t.integer "required_credit", default: 0
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -95,7 +96,6 @@ ActiveRecord::Schema.define(version: 20200403175841) do
     t.date "dob"
     t.string "nid"
     t.string "activation_code"
-    t.string "password_digest"
     t.bigint "state_id"
     t.bigint "city_id"
     t.datetime "created_at", null: false

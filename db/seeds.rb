@@ -52,6 +52,7 @@ shop = true
                 shop_id: shop.id,
                 name: Faker::Name.name,
                 brand: Faker::Name.name,
+                required_credit: [0,500,1000].sample
         )
 
         10.times do
@@ -83,7 +84,6 @@ end
         email: Faker::Internet.email,
         dob: Faker::Date.between(from: 40.years.ago, to: 15.years.ago),
         gender: [0,1].sample,
-        password: "password",
         city_id: city.id,
         state_id: city.state.id,
         created_at: date,

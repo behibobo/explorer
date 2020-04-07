@@ -1,12 +1,12 @@
 # app/auth/authenticate_user.rb
 class AuthenticateUser
   prepend SimpleCommand
-  attr_accessor :mobile, :password
+  attr_accessor :mobile, :activation_code
 
   #this is where parameters are taken when the command is called
-  def initialize(mobile, password)
+  def initialize(mobile, activation_code)
     @mobile = mobile
-    @password = password
+    @activation_code = activation_code
   end
   
   #this is where the result gets returned
@@ -18,7 +18,7 @@ class AuthenticateUser
 
   def user
     user = User.find_by_mobile(mobile)
-    return user if user && user.authenticate(password)
+    return user if user && user.activation_code == activation_code
 
     errors.add :user_authentication, 'Invalid credentials'
     nil

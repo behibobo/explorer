@@ -2,12 +2,10 @@ Rails.application.routes.draw do
 
   namespace :app do
     post 'auth/login', to: 'auth#login'
-    post 'auth/signup', to: 'auth#signup'
     post 'auth/activate', to: 'auth#activate'
-    post 'auth/setpassword', to: 'auth#set_password'
     get 'user', to: 'user#index'
     get 'items', to: 'items#index'
-    get 'last_items', to: 'items#last_items'
+    get 'gift_items', to: 'items#gift_items'
     post 'scan_item', to: 'items#scan_item'
   end
 
