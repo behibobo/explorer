@@ -3,7 +3,7 @@ class App::AuthController < ApplicationController
 
     def login
       user = User.where(mobile: params[:mobile]).first_or_initialize
-      user.activation_code = rand(9999).to_s.center(4, rand(9).to_s)
+      user.activation_code = "1234"
       user.save
 
       render json: user.to_json
