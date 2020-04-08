@@ -3,6 +3,7 @@ class App::ItemsController < AppController
 
 
         codes = ItemCode.where(user: current_user)
+           
         items = []
         codes.each do |code|
             item = {
@@ -21,11 +22,15 @@ class App::ItemsController < AppController
 
     def gift_items
         item_ids = ItemCode.where.not(gift: nil).pluck(:item_id)
-        gift_items = Item.where(id: item_ids).order(created_at: :desc)
+        gift_items = Item.where(id: item_ids)
+            .order(created_at: :desc)
+            .limit(params[:limit])
+            .offset(params[:offset])
 
         items = []
         gift_items.each do |item|
             item = {
+                id: item.id
                 item_name: item.name,
                 required_credit: item.required_credit,
                 total_gifts: item.item_codes.where.not(gift: nil).count,
