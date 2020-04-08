@@ -3,8 +3,6 @@ class User < ApplicationRecord
   validates_presence_of :mobile
   validates :mobile, uniqueness: true
 
-  before_create :generate_activation_code
-
   belongs_to :city, optional: true
   belongs_to :state, optional: true
   has_many :item_codes
@@ -39,12 +37,5 @@ class User < ApplicationRecord
     where("lower(#{column_name}) like ?", "#{prefix.downcase}%")
     .order(:last_name)
     .order(:first_name)
-  end
-
-  def generate_activation_code
-    loop do
-      self.activation_code = rand(9999999).to_s.center(6, rand(9).to_s)
-      break unless self.class.exists?(activation_code: activation_code)
-    end
   end
 end
