@@ -21,17 +21,17 @@ class App::ItemsController < AppController
 
     def gift_items
         item_ids = ItemCode.where.not(gift: nil).pluck(:item_id)
-        new_items = Item.where(id: item_ids).order(created_at: :desc)
+        gift_items = Item.where(id: item_ids).order(created_at: :desc)
 
         items = []
-        new_items.each do |new_item|
+        gift_items.each do |item|
             item = {
-                item_name: new_item.name,
+                item_name: item.name,
                 required_credit: item.required_credit,
                 total_gifts: item.item_codes.where.not(gift: nil).count,
-                item_brand: new_item.brand,
-                item_image: new_item.image_url,
-                gift_value: new_item.item_codes.where.not(gift: nil).first.gift.value,
+                item_brand: item.brand,
+                item_image: item.image_url,
+                gift_value: item.item_codes.where.not(gift: nil).first.gift.value,
             }
         items.push item
         end
