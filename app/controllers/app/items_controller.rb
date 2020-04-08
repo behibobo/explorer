@@ -1,9 +1,6 @@
 class App::ItemsController < AppController
     def index
-
-
         codes = ItemCode.where(user: current_user)
-           
         items = []
         codes.each do |code|
             item = {
@@ -30,7 +27,7 @@ class App::ItemsController < AppController
         items = []
         gift_items.each do |item|
             item = {
-                id: item.id
+                id: item.id,
                 item_name: item.name,
                 required_credit: item.required_credit,
                 total_gifts: item.item_codes.where.not(gift: nil).count,
