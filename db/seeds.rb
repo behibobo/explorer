@@ -34,7 +34,7 @@ unless City.count > 0
 end
 shop = true
 
-10.times do
+20.times do
     date = Date.today-rand(30)
     city = City.all.sample(1).first
 
@@ -91,3 +91,14 @@ end
     )
 end
 
+one = Gift.create(name: "gift one", value: 10000)
+two = Gift.create(name: "gift two", value: 20000)
+three = Gift.create(name: "gift three", value: 30000)
+
+10.times do 
+
+    item  = Item.find(rand(19).to_i + 1)
+    3.times do
+    item.item_codes.sample.update(gift: [one,two,three].sample) 
+    end
+end
