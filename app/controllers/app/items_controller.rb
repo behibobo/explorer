@@ -1,6 +1,9 @@
 class App::ItemsController < AppController
     def index
         codes = ItemCode.where(user: current_user)
+            .order(created_at: :desc)
+            .limit(params[:limit])
+            .offset(params[:offset])
         items = []
         codes.each do |code|
             item = {
