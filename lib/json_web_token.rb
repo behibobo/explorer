@@ -3,7 +3,7 @@ class JsonWebToken
   # our secret key to encode our jwt
 
     class << self
-      def encode(payload, exp = 10.hours.from_now)
+      def encode(payload, exp = 10.years.from_now)
         # set token expiration time
         payload[:exp] = exp.to_i
 
