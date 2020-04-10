@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 20200410205450) do
 
   create_table "items", force: :cascade do |t|
     t.bigint "shop_id"
-    t.string "uuid"
     t.string "name"
     t.string "brand"
     t.integer "required_credit", default: 0

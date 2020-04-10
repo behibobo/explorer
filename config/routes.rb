@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'user', to: 'user#index'
     get 'items', to: 'items#index'
     get 'gift_items', to: 'items#gift_items'
+    get 'treasures', to: 'treasures#index'
     post 'scan_item', to: 'items#scan_item'
   end
 
