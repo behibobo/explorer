@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200403175841) do
+ActiveRecord::Schema.define(version: 20200410205450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20200403175841) do
 
   create_table "items", force: :cascade do |t|
     t.bigint "shop_id"
+    t.string "uuid"
     t.string "name"
     t.string "brand"
     t.integer "required_credit", default: 0
@@ -76,6 +77,16 @@ ActiveRecord::Schema.define(version: 20200403175841) do
 
   create_table "states", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "treasures", force: :cascade do |t|
+    t.integer "value"
+    t.date "valid_to"
+    t.string "lat"
+    t.string "lng"
+    t.integer "required_credit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

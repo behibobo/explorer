@@ -18,14 +18,14 @@ development:
   database: explorer_development
   host: 127.0.0.1
   pool: 5
-  username: bobo
+  username: behzad
   password: p@ssw0rd
 
   adapter: postgresql
   encoding: unicode
   database: explorer_test
   pool: 5
-  username: bobo
+  username: behzad
   password: p@ssw0rd
 
 production:
@@ -33,5 +33,5 @@ production:
   encoding: unicode
   database: explorer_production
   pool: 5
-  username: bobo
+  username: behzad
   password: p@ssw0rd

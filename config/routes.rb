@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :users
     resources :items
     resources :gifts
+    resources :treasures
     resources :shops do
       resources :items
     end
