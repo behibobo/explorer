@@ -20,5 +20,23 @@ class App::UserController < AppController
         render json: data.to_json
     end
      
+    def update
+        current_user.update(user_params)
+        user = {
+            first_name: current_user.first_name,
+            last_name: current_user.last_name,
+            credit: current_user.credit,
+            gender: current_user.gender,
+            email: current_user.email,
+            mobile: current_user.mobile,
+            dob: current_user.dob&.to_date&.to_pdate&.to_s
+        }
+        render json: user.to_json
+    end
+
+    private
+    def user_params
+        params.require(:user).permit(:first_name, :last_name, :dob, :gender)
+    end
 end
   

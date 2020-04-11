@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get 'gift_items', to: 'items#gift_items'
     get 'treasures', to: 'treasures#index'
     post 'scan_item', to: 'items#scan_item'
+    put 'user', to: 'user#update'
   end
 
   namespace :api do
