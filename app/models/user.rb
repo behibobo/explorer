@@ -7,6 +7,8 @@ class User < ApplicationRecord
   belongs_to :state, optional: true
   has_many :item_codes
   has_many :items, through: :item_codes
+  has_many :user_treasures
+  has_many :user_loplobs
 
   def age
     Date.today.year - self.dob.to_date.year

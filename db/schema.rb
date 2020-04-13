@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200410205450) do
+ActiveRecord::Schema.define(version: 20200413174624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,22 @@ ActiveRecord::Schema.define(version: 20200410205450) do
     t.index ["shop_id"], name: "index_items_on_shop_id"
   end
 
+  create_table "loplob_values", force: :cascade do |t|
+    t.bigint "loplob_id"
+    t.bigint "value"
+    t.integer "qty"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["loplob_id"], name: "index_loplob_values_on_loplob_id"
+  end
+
+  create_table "loplobs", force: :cascade do |t|
+    t.integer "required_credit"
+    t.integer "qty"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "shops", force: :cascade do |t|
     t.bigint "city_id"
     t.bigint "state_id"
@@ -81,8 +97,8 @@ ActiveRecord::Schema.define(version: 20200410205450) do
   end
 
   create_table "treasures", force: :cascade do |t|
-    t.integer "value"
-    t.date "valid_to"
+    t.bigint "value"
+    t.datetime "valid_to"
     t.string "lat"
     t.string "lng"
     t.integer "required_credit"
@@ -94,6 +110,26 @@ ActiveRecord::Schema.define(version: 20200410205450) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_loplobs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "uuid"
+    t.bigint "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_loplobs_on_user_id"
+  end
+
+  create_table "user_treasures", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "treasure_type"
+    t.datetime "date"
+    t.bigint "value"
+    t.boolean "received", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_treasures_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -119,8 +155,11 @@ ActiveRecord::Schema.define(version: 20200410205450) do
   add_foreign_key "item_codes", "items"
   add_foreign_key "item_codes", "users"
   add_foreign_key "items", "shops"
+  add_foreign_key "loplob_values", "loplobs"
   add_foreign_key "shops", "cities"
   add_foreign_key "shops", "states"
+  add_foreign_key "user_loplobs", "users"
+  add_foreign_key "user_treasures", "users"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "states"
 end

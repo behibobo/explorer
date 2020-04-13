@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  
   namespace :app do
     post 'auth/login', to: 'auth#login'
     post 'auth/activate', to: 'auth#activate'
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
     get 'treasures', to: 'treasures#index'
     post 'scan_item', to: 'items#scan_item'
     post 'user', to: 'user#update'
+    get 'loplobs', to: 'loplobs#index'
   end
 
   namespace :api do
@@ -26,6 +28,9 @@ Rails.application.routes.draw do
     resources :items
     resources :gifts
     resources :treasures
+    resources :loplobs do
+      resources :loplob_values
+    end
     resources :shops do
       resources :items
     end
