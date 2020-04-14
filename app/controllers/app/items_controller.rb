@@ -56,37 +56,61 @@ class App::ItemsController < AppController
 
             scan_type = "treasure"
             if r.found == true
-                message = 
-            end
-        end
+                message = "این گنج در تاریخ #{t.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} کشف شده"
+                success = false
+            elsif t.valid_to < Time.now
+                message = "زمان اعتبار کنج به پایان رسیده"
+                success = false
+            else
+                success = true
 
-        if code.user.nil?
-            code.user = current_user
-            code.scan_date = Date.today
-            code.save!
+                FoundTreasure.create(
+                    uuid: t.uuid,
+                    value: t.value,
+                    date: Time.now,
+                    user:current_user
+                )
 
-            unless code.gift.nil?
-                current_user.credit += code.gift.value
-                current_user.save
+                t.found = true
+                t.scan_date = Time.now
+                t.save
             end
-            message = "بارکد با موفقیت ثبت شد"
-            success = true
+
+            item = {
+                scan_date: t.scan_date.to_date.to_pdate.to_s,
+                gift_value: t.value,
+            }
+
         else
-            success = false
-            message = "این بارکد قبلا توسط خود شما در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user == current_user
-            message = "این بارکد قبلا توسط کاربر دیگری در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user != current_user
+
+            if code.user.nil?
+                code.user = current_user
+                code.scan_date = Date.today
+                code.save!
+
+                unless code.gift.nil?
+                    current_user.credit += code.gift.value
+                    current_user.save
+                end
+                message = "بارکد با موفقیت ثبت شد"
+                success = true
+            else
+                success = false
+                message = "این بارکد قبلا توسط خود شما در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user == current_user
+                message = "این بارکد قبلا توسط کاربر دیگری در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user != current_user
+            end
+
+            item = {
+                scan_date: code.scan_date.to_date.to_pdate.to_s,
+                item_name: code.item.name,
+                item_brand: code.item.brand,
+                item_image: code.item.image_url,
+                has_gift: !code.gift.nil?,
+                gift_value: (!code.gift.nil?)? code.gift.value : "",
+            }
         end
 
-        item = {
-            scan_date: code.scan_date.to_date.to_pdate.to_s,
-            item_name: code.item.name,
-            item_brand: code.item.brand,
-            item_image: code.item.image_url,
-            has_gift: !code.gift.nil?,
-            gift_value: (!code.gift.nil?)? code.gift.value : "",
-        }
-
-        render json: {item: item, message: message, success: success }
+        render json: {item: item, scan_type: scan_type, message: message, success: success }
     end
 end
   

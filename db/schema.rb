@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20200414204842) do
   create_table "purchased_loplobs", force: :cascade do |t|
     t.bigint "user_id"
     t.string "uuid"
-    t.string "value"
+    t.bigint "value"
     t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -118,9 +118,12 @@ ActiveRecord::Schema.define(version: 20200414204842) do
   create_table "treasures", force: :cascade do |t|
     t.bigint "value"
     t.datetime "valid_to"
+    t.string "uuid"
     t.string "lat"
     t.string "lng"
     t.integer "required_credit"
+    t.datetime "scan_date"
+    t.boolean "found", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -138,17 +141,6 @@ ActiveRecord::Schema.define(version: 20200414204842) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_loplobs_on_user_id"
-  end
-
-  create_table "user_treasures", force: :cascade do |t|
-    t.bigint "user_id"
-    t.integer "treasure_type"
-    t.datetime "date"
-    t.bigint "value"
-    t.boolean "received", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_user_treasures_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -180,7 +172,6 @@ ActiveRecord::Schema.define(version: 20200414204842) do
   add_foreign_key "shops", "cities"
   add_foreign_key "shops", "states"
   add_foreign_key "user_loplobs", "users"
-  add_foreign_key "user_treasures", "users"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "states"
 end

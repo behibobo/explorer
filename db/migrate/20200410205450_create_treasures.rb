@@ -7,7 +7,8 @@ class CreateTreasures < ActiveRecord::Migration[5.1]
       t.string :lat
       t.string :lng
       t.integer :required_credit
-
+      t.datetime :scan_date, null: true 
+      t.boolean :found, default: false
       t.timestamps
     end
   end

@@ -43,8 +43,8 @@ class App::LoplobsController < AppController
             return
         end
         
-        c = current_user.credit -= params[:required_credit]
-        current_user.update(credit: c)
+        current_user.credit -= params[:required_credit]
+        current_user.save
 
         if lop.value == 0
             message = "lost"

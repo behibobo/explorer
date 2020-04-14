@@ -11,5 +11,4 @@ class ItemCode < ApplicationRecord
       break unless self.class.exists?(uuid: uuid)
     end
   end
-
 end

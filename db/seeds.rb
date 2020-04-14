@@ -102,3 +102,16 @@ three = Gift.create(name: "gift three", value: 30000)
     item.item_codes.sample.update(gift: [one,two,three].sample) 
     end
 end
+
+
+Treasure.create(
+    lat: "38.073704", 
+    lng: "46.271831",
+    value: 20000,
+)
+
+Treasure.create(
+    lat: "38.079796", 
+    lng: "46.284896",
+    value: 50000,
+)
