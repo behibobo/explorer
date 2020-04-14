@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20200414204842) do
     t.bigint "user_id"
     t.integer "value"
     t.datetime "date"
+    t.string "uuid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_found_treasures_on_user_id"

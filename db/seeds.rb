@@ -108,10 +108,25 @@ Treasure.create(
     lat: "38.073704", 
     lng: "46.271831",
     value: 20000,
+    required_credit: 1000,
+    valid_to: Time.now + 2.days
 )
 
 Treasure.create(
     lat: "38.079796", 
     lng: "46.284896",
     value: 50000,
+    required_credit: 1500,
+    valid_to: Time.now + 2.days
 )
+
+User.create(
+
+        mobile: "09143022374",
+        credit: 15000
+    )
+
+Loplob.create(required_credit: 1000, qty: 80)
+
+LoplobValue.create(value: 25000, qty: 5, loplob: Loplob.first)
+LoplobValue.create(value: 35000, qty: 7, loplob: Loplob.first)

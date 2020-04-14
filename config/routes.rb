@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'items', to: 'items#index'
     get 'gift_items', to: 'items#gift_items'
     get 'treasures', to: 'treasures#index'
-    post 'scan_item', to: 'items#scan_item'
+    post 'scan', to: 'items#scan_item'
     post 'user', to: 'user#update'
     get 'loplobs', to: 'loplobs#index'
     post 'loplobs', to: 'loplobs#purchase'

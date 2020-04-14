@@ -4,7 +4,7 @@ class CreateFoundTreasures < ActiveRecord::Migration[5.1]
       t.references :user, foreign_key: true
       t.integer :value
       t.datetime :date
-
+      t.string :uuid
       t.timestamps
     end
   end

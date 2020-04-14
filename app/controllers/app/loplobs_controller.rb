@@ -1,6 +1,12 @@
 class App::LoplobsController < AppController
     def index
         lop = Loplob.where(required_credit: params[:required_credit]).first
+
+        if lop.nil?
+            render json: [].to_json
+            return
+        end
+
         UserLoplob.where(user:current_user).destroy_all
         lop.qty.times do
             UserLoplob.create(

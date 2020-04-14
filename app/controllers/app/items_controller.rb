@@ -46,7 +46,7 @@ class App::ItemsController < AppController
 
     def scan_item
         message = ""
-        success = true
+        success = false
         scan_type = "item"
 
         code = ItemCode.find_by(uuid: params[:code])
@@ -54,8 +54,20 @@ class App::ItemsController < AppController
         if code.nil?
             t = Treasure.find_by(uuid: params[:code])
 
+            if t.nil?
+                message = "wrong code"
+                success = false
+                item = nil
+                render json: {item: item, scan_type: scan_type, message: message, success: success }
+                return
+            end
+
+
+            current_user.credit += t.required_credit
+            current_user.save
+
             scan_type = "treasure"
-            if r.found == true
+            if t.found == true
                 message = "این گنج در تاریخ #{t.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} کشف شده"
                 success = false
             elsif t.valid_to < Time.now
@@ -91,9 +103,10 @@ class App::ItemsController < AppController
                 unless code.gift.nil?
                     current_user.credit += code.gift.value
                     current_user.save
+                    success = true
                 end
                 message = "بارکد با موفقیت ثبت شد"
-                success = true
+                
             else
                 success = false
                 message = "این بارکد قبلا توسط خود شما در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user == current_user
@@ -102,11 +115,7 @@ class App::ItemsController < AppController
 
             item = {
                 scan_date: code.scan_date.to_date.to_pdate.to_s,
-                item_name: code.item.name,
-                item_brand: code.item.brand,
-                item_image: code.item.image_url,
-                has_gift: !code.gift.nil?,
-                gift_value: (!code.gift.nil?)? code.gift.value : "",
+                gift_value: (!code.gift.nil?)? code.gift.value : 0,
             }
         end
 
