@@ -7,8 +7,10 @@ class User < ApplicationRecord
   belongs_to :state, optional: true
   has_many :item_codes
   has_many :items, through: :item_codes
-  has_many :user_treasures
-  has_many :user_loplobs
+  has_many :user_treasures, dependent: :destroy
+  has_many :user_loplobs, dependent: :destroy
+  has_many :purchased_loplobs, dependent: :destroy
+  has_many :found_treasures, dependent: :destroy
 
   def age
     Date.today.year - self.dob.to_date.year

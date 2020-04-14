@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     post 'scan_item', to: 'items#scan_item'
     post 'user', to: 'user#update'
     get 'loplobs', to: 'loplobs#index'
+    post 'loplobs', to: 'loplobs#purchase'
+    get 'purchased_loplobs', to: 'loplobs#purchased_loplobs'
+    get 'found_treasures', to: 'treasures#found_treasures'
   end
 
   namespace :api do

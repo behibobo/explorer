@@ -6,7 +6,7 @@ class App::ItemsController < AppController
             .offset(params[:offset])
         items = []
         codes.each do |code|
-            item = {
+            d = {
                 scan_date: code.scan_date.to_date.to_pdate.to_s,
                 item_name: code.item.name,
                 item_brand: code.item.brand,
@@ -14,7 +14,7 @@ class App::ItemsController < AppController
                 has_gift: !code.gift.nil?,
                 gift_value: (!code.gift.nil?)? code.gift.value : "",
             }
-        items.push item
+        items.push d
         end
 
         render json: items.to_json
@@ -29,7 +29,7 @@ class App::ItemsController < AppController
 
         items = []
         gift_items.each do |item|
-            item = {
+            d = {
                 id: item.id,
                 item_name: item.name,
                 required_credit: item.required_credit,
@@ -38,7 +38,7 @@ class App::ItemsController < AppController
                 item_image: item.image_url,
                 gift_value: item.item_codes.where.not(gift: nil).first.gift.value,
             }
-        items.push item
+        items.push d
         end
 
         render json: items.to_json
@@ -47,7 +47,18 @@ class App::ItemsController < AppController
     def scan_item
         message = ""
         success = true
+        scan_type = "item"
+
         code = ItemCode.find_by(uuid: params[:code])
+
+        if code.nil?
+            t = Treasure.find_by(uuid: params[:code])
+
+            scan_type = "treasure"
+            if r.found == true
+                message = 
+            end
+        end
 
         if code.user.nil?
             code.user = current_user

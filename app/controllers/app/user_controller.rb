@@ -9,7 +9,7 @@ class App::UserController < AppController
             gender: current_user.gender,
             email: current_user.email,
             mobile: current_user.mobile,
-            dob: current_user.dob&.to_date&.to_pdate&.to_s.gsub("-", "/")
+            dob: current_user.dob&.to_date&.to_pdate&.to_s&.gsub("-", "/")
         }
 
         data['user'] = user
@@ -34,7 +34,7 @@ class App::UserController < AppController
             gender: current_user.gender,
             email: current_user.email,
             mobile: current_user.mobile,
-            dob: current_user.dob&.to_date&.to_pdate&.to_s.gsub("-", "/")
+            dob: current_user.dob&.to_date&.to_pdate&.to_s&.gsub("-", "/")
         }
         render json: user.to_json
     end

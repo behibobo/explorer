@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200413174624) do
+ActiveRecord::Schema.define(version: 20200414204842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 20200413174624) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["state_id"], name: "index_cities_on_state_id"
+  end
+
+  create_table "found_treasures", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "value"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_found_treasures_on_user_id"
   end
 
   create_table "gifts", force: :cascade do |t|
@@ -75,6 +84,16 @@ ActiveRecord::Schema.define(version: 20200413174624) do
     t.integer "qty"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "purchased_loplobs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "uuid"
+    t.string "value"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_purchased_loplobs_on_user_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -151,11 +170,13 @@ ActiveRecord::Schema.define(version: 20200413174624) do
   end
 
   add_foreign_key "cities", "states"
+  add_foreign_key "found_treasures", "users"
   add_foreign_key "item_codes", "gifts"
   add_foreign_key "item_codes", "items"
   add_foreign_key "item_codes", "users"
   add_foreign_key "items", "shops"
   add_foreign_key "loplob_values", "loplobs"
+  add_foreign_key "purchased_loplobs", "users"
   add_foreign_key "shops", "cities"
   add_foreign_key "shops", "states"
   add_foreign_key "user_loplobs", "users"

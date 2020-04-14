@@ -26,7 +26,64 @@ class App::LoplobsController < AppController
 
         end
 
-        render json: current_user.user_loplobs.shuffle.to_json
+        render json: current_user.user_loplobs.shuffle
+            .to_json
+    end
+
+
+    def purchase
+        lop = UserLoplob.find_by(uuid: params[:uuid])
+        
+        success = false
+        message = ""
+
+        if current_user.credit < params[:required_credit].to_i
+            message = "insufficient credit"
+            render json: {success: success, message: message }, status: 422
+            return
+        end
+        
+        c = current_user.credit -= params[:required_credit]
+        current_user.update(credit: c)
+
+        if lop.value == 0
+            message = "lost"
+            success = false
+
+            PurchasedLoplob.create(
+                uuid: params[:uuid],
+                value: lop.value,
+                date: Time.now,
+                user:current_user
+            )
+        else
+            PurchasedLoplob.create(
+                uuid: params[:uuid],
+                value: lop.value,
+                date: Time.now,
+                user:current_user
+            )
+            message = "won"
+            success = true
+        end
+        UserLoplob.where(user:current_user).destroy_all
+        render json: {success: success, message: message }
+    end
+
+
+    def purchased_loplobs
+        items = []
+        current_user.purchased_loplobs.order(created_at: :desc).each do |item|
+            p = {
+                id: item.id,
+                uuid: item.uuid,
+                value: item.value,
+                date: item.date.to_date.to_pdate.to_s,
+                won: item.value.to_i > 0 ? true : false
+            }
+        items.push p
+        end
+        render json: items.to_json
     end
 end
   
