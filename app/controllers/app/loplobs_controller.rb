@@ -79,7 +79,12 @@ class App::LoplobsController < AppController
 
     def purchased_loplobs
         items = []
-        current_user.purchased_loplobs.order(created_at: :desc).each do |item|
+        loplobs = PurchasedLoplob.where(user: current_user)
+            .order(created_at: :desc)
+            .limit(params[:limit])
+            .offset(params[:offset])
+
+        loplobs.each do |item|
             p = {
                 id: item.id,
                 uuid: item.uuid,

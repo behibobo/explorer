@@ -9,7 +9,12 @@ class App::TreasuresController < AppController
 
     def found_treasures
         items = []
-        current_user.found_treasures.order(created_at: :desc).each do |item|
+        treasures = FoundTreasure.where(user: current_user)
+            .order(created_at: :desc)
+            .limit(params[:limit])
+            .offset(params[:offset])
+
+        treasures.each do |item|
             p = {
                 id: item.id,
                 value: item.value,

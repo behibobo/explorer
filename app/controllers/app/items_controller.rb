@@ -55,7 +55,7 @@ class App::ItemsController < AppController
             t = Treasure.find_by(uuid: params[:code])
 
             if t.nil?
-                message = "wrong code"
+                message = "کد اسکن شده اشتباه است"
                 success = false
                 item = nil
                 render json: {item: item, scan_type: scan_type, message: message, success: success }
