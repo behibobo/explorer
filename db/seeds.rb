@@ -64,6 +64,7 @@ shop = true
         item = Item.create(
             name: Faker::Name.name,
             brand: Faker::Name.name,
+            required_credit: [0,500,1000].sample
         )
         10.times do
             ItemCode.create(

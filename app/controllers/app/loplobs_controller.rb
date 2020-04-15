@@ -58,7 +58,7 @@ class App::LoplobsController < AppController
             current_user.save
 
             if lop.value == 0
-                message = "lost"
+                message = " متاسفانه لب شما پوچ است "
                 success = false
 
                 PurchasedLoplob.create(
@@ -74,7 +74,7 @@ class App::LoplobsController < AppController
                     date: Time.now,
                     user:current_user
                 )
-                message = "won"
+                message = "تبریک"
                 success = true
             end
         end
