@@ -5,8 +5,8 @@ class App::LoplobsController < AppController
     end
 
 
-    def get_loplobs
-        lop = Loplob.where(required_credit: params[:required_credit]).first
+    def show
+        lop = Loplob.find(params[:id])
 
         if lop.nil?
             render json: [].to_json
@@ -37,13 +37,12 @@ class App::LoplobsController < AppController
                 .update(value: val.value)
 
         end
-
         render json: current_user.user_loplobs.shuffle
             .to_json
     end
 
 
-    def purchase
+    def create
         lop = UserLoplob.find_by(uuid: params[:uuid])
         
         success = false
