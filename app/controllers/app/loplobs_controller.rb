@@ -54,7 +54,7 @@ class App::LoplobsController < AppController
             value = 0
         else
             value = lop.value
-            current_user.credit -= params[:required_credit]
+            current_user.credit -= lop.required_credit
             current_user.save
 
             if lop.value == 0

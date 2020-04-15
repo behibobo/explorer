@@ -62,7 +62,7 @@ class App::ItemsController < AppController
                 return
             end
 
-            if current_user.create < code.required_credit
+            if current_user.credit < t.required_credit
                 success = false
                 scan_type = "treasure"
                 message = "شما اعتبار کارفی برای انجام این عملیات ندارید لطفا کیف پول خود را شارژ کنید"
@@ -99,7 +99,7 @@ class App::ItemsController < AppController
 
         else
             
-            if current_user.create < code.required_credit
+            if current_user.credit < code.item.required_credit
                 success = false
                 message = "شما اعتبار کارفی برای انجام این عملیات ندارید لطفا کیف پول خود را شارژ کنید"
             else
