@@ -1,5 +1,11 @@
 class App::LoplobsController < AppController
     def index
+        lops = Loplob.all
+        render json:  lops.to_json
+    end
+
+
+    def get_loplobs
         lop = Loplob.where(required_credit: params[:required_credit]).first
 
         if lop.nil?
@@ -73,7 +79,7 @@ class App::LoplobsController < AppController
             success = true
         end
         UserLoplob.where(user:current_user).destroy_all
-        render json: {success: success, message: message }
+        render json: {success: success, message: message, value: lop.value }
     end
 
 
