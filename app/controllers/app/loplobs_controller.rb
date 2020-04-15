@@ -45,41 +45,41 @@ class App::LoplobsController < AppController
 
     def create
         lop = UserLoplob.find_by(uuid: params[:uuid])
-        
         success = false
         message = ""
 
-        if current_user.credit < params[:required_credit].to_i
-            message = "insufficient credit"
-            render json: {success: success, message: message }, status: 422
-            return
-        end
-        
-        current_user.credit -= params[:required_credit]
-        current_user.save
-
-        if lop.value == 0
-            message = "lost"
+        if current_user.credit < lop.required_credit
+            message = "شما اعتبار کارفی برای انجام این عملیات ندارید لطفا کیف پول خود را شارژ کنید"
             success = false
-
-            PurchasedLoplob.create(
-                uuid: params[:uuid],
-                value: lop.value,
-                date: Time.now,
-                user:current_user
-            )
+            value = 0
         else
-            PurchasedLoplob.create(
-                uuid: params[:uuid],
-                value: lop.value,
-                date: Time.now,
-                user:current_user
-            )
-            message = "won"
-            success = true
+            value = lop.value
+            current_user.credit -= params[:required_credit]
+            current_user.save
+
+            if lop.value == 0
+                message = "lost"
+                success = false
+
+                PurchasedLoplob.create(
+                    uuid: params[:uuid],
+                    value: lop.value,
+                    date: Time.now,
+                    user:current_user
+                )
+            else
+                PurchasedLoplob.create(
+                    uuid: params[:uuid],
+                    value: lop.value,
+                    date: Time.now,
+                    user:current_user
+                )
+                message = "won"
+                success = true
+            end
         end
         UserLoplob.where(user:current_user).destroy_all
-        render json: {success: success, message: message, value: lop.value }
+        render json: {success: success, message: message, value: value }
     end
 
 

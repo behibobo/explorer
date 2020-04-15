@@ -62,57 +62,66 @@ class App::ItemsController < AppController
                 return
             end
 
-
-            current_user.credit += t.required_credit
-            current_user.save
-
-            scan_type = "treasure"
-            if t.found == true
-                message = "این گنج در تاریخ #{t.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} کشف شده"
+            if current_user.create < code.required_credit
                 success = false
-            elsif t.valid_to < Time.now
-                message = "زمان اعتبار کنج به پایان رسیده"
-                success = false
+                scan_type = "treasure"
+                message = "شما اعتبار کارفی برای انجام این عملیات ندارید لطفا کیف پول خود را شارژ کنید"
             else
-                success = true
+                current_user.credit += t.required_credit
+                current_user.save
 
-                FoundTreasure.create(
-                    uuid: t.uuid,
-                    value: t.value,
-                    date: Time.now,
-                    user:current_user
-                )
+                scan_type = "treasure"
+                if t.found == true
+                    message = "این گنج در تاریخ #{t.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} کشف شده"
+                    success = false
+                elsif t.valid_to < Time.now
+                    message = "زمان اعتبار کنج به پایان رسیده"
+                    success = false
+                else
+                    success = true
 
-                t.found = true
-                t.scan_date = Time.now
-                t.save
+                    FoundTreasure.create(
+                        uuid: t.uuid,
+                        value: t.value,
+                        date: Time.now,
+                        user:current_user
+                    )
+
+                    t.found = true
+                    t.scan_date = Time.now
+                    t.save
+                end
             end
-
             item = {
                 scan_date: t.scan_date.to_date.to_pdate.to_s,
                 gift_value: t.value,
             }
 
         else
-
-            if code.user.nil?
-                code.user = current_user
-                code.scan_date = Date.today
-                code.save!
-
-                unless code.gift.nil?
-                    current_user.credit += code.gift.value
-                    current_user.save
-                    success = true
-                end
-                message = "بارکد با موفقیت ثبت شد"
-                
-            else
+            
+            if current_user.create < code.required_credit
                 success = false
-                message = "این بارکد قبلا توسط خود شما در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user == current_user
-                message = "این بارکد قبلا توسط کاربر دیگری در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user != current_user
+                message = "شما اعتبار کارفی برای انجام این عملیات ندارید لطفا کیف پول خود را شارژ کنید"
+            else
+                if code.user.nil?
+                    code.user = current_user
+                    code.scan_date = Date.today
+                    code.save!
+    
+                    unless code.gift.nil?
+                        current_user.credit += code.gift.value
+                        current_user.save
+                        success = true
+                    end
+                    message = "بارکد با موفقیت ثبت شد"
+                    
+                else
+                    success = false
+                    message = "این بارکد قبلا توسط خود شما در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user == current_user
+                    message = "این بارکد قبلا توسط کاربر دیگری در تاریخ #{code.scan_date.to_date.to_pdate.strftime("%A %d %b %Y ")} ثبت شده است" if code.user != current_user
+                end
             end
-
+            
             item = {
                 scan_date: code.scan_date.to_date.to_pdate.to_s,
                 gift_value: (!code.gift.nil?)? code.gift.value : 0,
