@@ -18,7 +18,8 @@ class App::LoplobsController < AppController
             UserLoplob.create(
                 uuid: SecureRandom.uuid(),
                 value: 0,
-                user: current_user
+                user: current_user,
+                required_credit: lop.required_credit
             )
         end
 
