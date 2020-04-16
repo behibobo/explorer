@@ -6,15 +6,15 @@ class UserSerializer < ActiveModel::Serializer
   end
   
   def dob
-    object.dob.to_date.to_pdate.to_s
+    object&.dob&.to_date&.to_pdate&.to_s
   end
 
   def city
-    object.city.name
+    object&.city&.name
   end
 
   def state
-    object.state.name
+    object&.state&.name
   end
 
   def history

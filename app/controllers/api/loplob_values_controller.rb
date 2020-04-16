@@ -3,7 +3,8 @@ class Api::LoplobValuesController < ApplicationController
 
   # GET /loplob_values
   def index
-    @loplob_values = LoplobValue.all
+    lop = Loplob.find(params[:loplob_id])
+    @loplob_values = lop.loplob_values
 
     render json: @loplob_values
   end
@@ -18,7 +19,7 @@ class Api::LoplobValuesController < ApplicationController
     @loplob_value = LoplobValue.new(loplob_value_params)
 
     if @loplob_value.save
-      render json: @loplob_value, status: :created, location: @loplob_value
+      render json: @loplob_value, status: :created
     else
       render json: @loplob_value.errors, status: :unprocessable_entity
     end

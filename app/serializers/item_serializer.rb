@@ -1,5 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :brand, :codes, :item_count, :image, :created_at, :shop
+  attributes :id, :name, :brand, :codes, :item_count, :image, :required_credit, :created_at, :shop
 
   def shop
     object.shop

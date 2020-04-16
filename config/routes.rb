@@ -37,7 +37,10 @@ Rails.application.routes.draw do
       resources :items
     end
     get 'find_shops', to: 'shops#find_shops'
-
+    post 'user/update_credit', to: "users#update_credit"
+    get 'user/:id/transactions', to: "users#user_transaction"
+    get 'user/:id/loplobs', to: "users#purchased_loplobs"
+    get 'user/:id/treasures', to: "users#found_treasures"
   end
 
 end

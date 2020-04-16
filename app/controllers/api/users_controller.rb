@@ -8,6 +8,7 @@ class Api::UsersController < ApiController
 
       users = users.starts_with('first_name', params[:first_name]) if params[:first_name]
       users = users.starts_with('last_name', params[:last_name]) if params[:last_name]
+      users = users.contains('mobile', params[:mobile]) if params[:mobile]
 
       if params[:order] 
         if params[:order] == "city"
@@ -36,6 +37,44 @@ class Api::UsersController < ApiController
     def show
       user = User.find(params[:id])
       render json: user
+    end
+
+    def update_credit
+      user = User.find(params[:id])
+      user.credit += params[:amount]
+      if user.save
+
+        UserTransaction.create(
+          amount: params[:amount],
+          user: user,
+          transaction_type: "charge_by_admin",
+          credit: user.credit
+        )
+        render json: user
+        return
+      end
+      render json: user.errors, status: :unprocessable_entity
+    end
+
+    def user_transaction
+      all = UserTransaction.where(user_id: params[:id])
+        .order(created_at: :desc)
+
+      render json: all
+    end
+
+    
+    def purchased_loplobs
+      all = PurchasedLoplob.where(user_id: params[:id])
+        .order(date: :desc)
+
+        render json: all
+    end
+
+    def found_treasures
+      all = FoundTreasure.where(user_id: params[:id])
+        .order(date: :desc)
+        render json: all
     end
 
     def destroy

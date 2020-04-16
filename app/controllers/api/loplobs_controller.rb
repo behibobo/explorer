@@ -18,7 +18,7 @@ class Api::LoplobsController < ApplicationController
     @loplob = Loplob.new(loplob_params)
 
     if @loplob.save
-      render json: @loplob, status: :created, location: @loplob
+      render json: @loplob, status: :created
     else
       render json: @loplob.errors, status: :unprocessable_entity
     end

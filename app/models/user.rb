@@ -11,9 +11,14 @@ class User < ApplicationRecord
   has_many :user_loplobs, dependent: :destroy
   has_many :purchased_loplobs, dependent: :destroy
   has_many :found_treasures, dependent: :destroy
+  has_many :user_transactions, dependent: :destroy
 
   def age
-    Date.today.year - self.dob.to_date.year
+    if self.dob.nil?
+      "نامشخص"
+    else
+      (Date.today.year - self.dob.to_date.year).to_s
+    end
   end
 
   def self.this_month(day, state_id = nil)
@@ -39,6 +44,12 @@ class User < ApplicationRecord
 
   def self.starts_with(column_name, prefix)
     where("lower(#{column_name}) like ?", "#{prefix.downcase}%")
+    .order(:last_name)
+    .order(:first_name)
+  end
+
+  def self.contains(column_name, prefix)
+    where("lower(#{column_name}) like ?", "%#{prefix.downcase}%")
     .order(:last_name)
     .order(:first_name)
   end
