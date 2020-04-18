@@ -1,6 +1,18 @@
 class DashboardController < ApplicationController
-
+    skip_before_action :authenticate_request, only: [:index], raise: false
     def index
-        render json: current_user
+        data = []
+        states = State.all
+
+        states.each do |state|
+            cities = City.where(state_id: state.id)
+                .pluck(:name)
+            {
+                state: state.name,
+                cities: cities
+            }
+        end
+
+        return json: data.to_json
     end
 end
