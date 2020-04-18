@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  
+  get 'dash', to: "dashboard#index"
   namespace :app do
     post 'auth/login', to: 'auth#login'
     post 'auth/activate', to: 'auth#activate'
