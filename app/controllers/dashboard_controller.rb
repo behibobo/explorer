@@ -13,6 +13,6 @@ class DashboardController < ApplicationController
             }
         end
 
-        return json: data.to_json
+        render json: data.to_json
     end
 end
