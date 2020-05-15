@@ -9,6 +9,8 @@ class App::UserController < AppController
             gender: current_user.gender,
             email: current_user.email,
             mobile: current_user.mobile,
+            state: current_user&.state&.name,
+            city: current_user&.city&.name,
             dob: current_user.dob&.to_date&.to_pdate&.to_s&.gsub("-", "/")
         }
 
