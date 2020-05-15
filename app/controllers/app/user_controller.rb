@@ -22,10 +22,17 @@ class App::UserController < AppController
      
     def update
         current_user.update(user_params)
+        if params[:dob]
+            d = params[:dob].split("/")
+            date = PDate.new(d[0].to_i, d[1].to_i, d[2].to_i).to_date
+            current_user.update(dob: date)
+        end
 
-        d = params[:dob].split("/")
-        date = PDate.new(d[0].to_i, d[1].to_i, d[2].to_i).to_date
-        current_user.update(dob: date)
+        if params[:state] && params[:city]
+            state = State.find_by(name: params[:state])
+            city = state.cities.find_by(name: params[:city])
+            current_user.update(state_id: state.id, city_id: city.id)
+        end
 
         user = {
             first_name: current_user.first_name,
@@ -34,6 +41,8 @@ class App::UserController < AppController
             gender: current_user.gender,
             email: current_user.email,
             mobile: current_user.mobile,
+            state: current_user&.state&.name,
+            city: current_user&.city&.name,
             dob: current_user.dob&.to_date&.to_pdate&.to_s&.gsub("-", "/")
         }
         render json: user.to_json
