@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :loplobs, only: [:index, :show, :create]
     get 'purchased_loplobs', to: 'loplobs#purchased_loplobs'
     get 'found_treasures', to: 'treasures#found_treasures'
+    get 'states', to: 'states#index'
+    post 'cities', to: 'states#cities'
   end
 
   namespace :api do
