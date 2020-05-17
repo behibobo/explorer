@@ -46,6 +46,6 @@ class Api::TreasuresController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def treasure_params
-      params.require(:treasure).permit(:value, :valid_to, :lat, :lng, :required_credit)
+      params.require(:treasure).permit(:value, :valid_to, :lat, :lng, :state_id, :required_credit)
     end
 end

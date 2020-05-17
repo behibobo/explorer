@@ -50,6 +50,29 @@ class App::UserController < AppController
         render json: user.to_json
     end
 
+    def home
+        shops = Shop.all
+        items = Item.all
+        treasures = Treasure.all
+        if params[:state_id] && params[:state_id].to_i != 0
+            shops = shops.where(state_id: params[:state_id].to_i)
+            new_items = Item.where(shop: nil)
+            items = shops.map {|shop| shop.items }.flatten
+            items = items + new_items
+            treasures = treasures.where(state_id: params[:state_id].to_i)
+        end
+        data = {}
+
+        item_ids = items.pluck(:id)
+        data['total_items'] = items.count
+        data['total_gifts'] = items.map {|item| item.item_codes.where.not(gift: nil) }.flatten.count
+        data['found_gifts'] = items.map {|item| item.item_codes.where.not(gift: nil).where.not(user: nil) }.flatten.count
+        data['percentage'] = (data['found_gifts'] * 100) / data['total_gifts']
+        data['treasures'] = treasures.count
+
+        render json: data.to_json
+    end
+
     private
     def user_params
         params.require(:user).permit(:first_name, :last_name, :gender)

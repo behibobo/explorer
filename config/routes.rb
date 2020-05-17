@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'treasures', to: 'treasures#index'
     post 'scan', to: 'items#scan_item'
     post 'user', to: 'user#update'
+    get 'home', to: 'user#home'
     resources :loplobs, only: [:index, :show, :create]
     get 'purchased_loplobs', to: 'loplobs#purchased_loplobs'
     get 'found_treasures', to: 'treasures#found_treasures'
