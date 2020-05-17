@@ -31,8 +31,8 @@ class App::UserController < AppController
         end
 
         if params[:state] && params[:city]
-            state = State.find_by(name: params[:state])
-            city = state.cities.find_by(name: params[:city])
+            state = State.find(params[:state].to_i)
+            city = City.find(params[:city].to_i)
             current_user.update(state_id: state.id, city_id: city.id)
         end
 
@@ -43,8 +43,8 @@ class App::UserController < AppController
             gender: current_user.gender,
             email: current_user.email,
             mobile: current_user.mobile,
-            state: current_user&.state&.name,
-            city: current_user&.city&.name,
+            state: current_user&.state&.id,
+            city: current_user&.city&.id,
             dob: current_user.dob&.to_date&.to_pdate&.to_s&.gsub("-", "/")
         }
         render json: user.to_json
