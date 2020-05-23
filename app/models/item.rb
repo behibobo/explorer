@@ -8,9 +8,9 @@ class Item < ApplicationRecord
 
   def image_url
     unless self.image.nil?
-      "http://194.5.205.107:3000#{self.image}"
+      "http://194.5.205.105:3003#{self.image}"
     else
-      "http://194.5.205.107:3000/no_image.png"
+      "http://194.5.205.105:3003/no_image.png"
     end
   end
 end
