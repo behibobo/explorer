@@ -4,7 +4,6 @@ class Api::TreasuresController < ApplicationController
   # GET /treasures
   def index
     @treasures = Treasure.all
-
     render json: @treasures
   end
 
