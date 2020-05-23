@@ -3,7 +3,7 @@ class Api::TreasuresController < ApplicationController
 
   # GET /treasures
   def index
-    @treasures = Treasure.all
+    @treasures = Treasure.order(id: :desc).all
     render json: @treasures
   end
 
