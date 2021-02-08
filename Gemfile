@@ -20,7 +20,7 @@ gem 'kaminari'
 gem 'rails_pdate'
 gem 'pager_api'
 gem 'pagy'
-gem 'carrierwave', '~> 2.0'
+gem 'carrierwave', '~> 2.1'
 
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
